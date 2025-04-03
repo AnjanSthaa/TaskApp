@@ -1,39 +1,72 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import { MaterialIcons } from '@expo/vector-icons'
+import IndexScreen from './index'
+import LoginScreen from './screens/Login'
+import SignupScreen from './screens/Signup'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebaseConfig'
+import ProfileScreen from './screens/ProfileScreen'
+import { View } from 'react-native'
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const Stack = createStackNavigator()
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    <Stack.Navigator initialRouteName='Login'>
+      <Stack.Screen
+        name='Login'
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Signup'
+        component={SignupScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Index'
+        component={IndexScreen}
+        options={({ navigation }) => ({
+          title: 'Todo List',
+          headerStyle: { backgroundColor: '#f5f5f5' },
+          headerTitleStyle: { fontWeight: 'bold', color: '#333' },
+          headerLeft: () => null,
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialIcons
+                name='person'
+                size={24}
+                color='#333'
+                style={{ marginRight: 15 }}
+                onPress={() => navigation.navigate('Profile')}
+              />
+              <MaterialIcons
+                name='logout'
+                size={24}
+                color='#333'
+                style={{ marginRight: 15 }}
+                onPress={async () => {
+                  try {
+                    await signOut(auth)
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'Login' }],
+                    })
+                  } catch (error) {
+                    console.error('Error logging out:', error)
+                  }
+                }}
+              />
+            </View>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name='Profile'
+        component={ProfileScreen}
+        options={{ title: 'Profile' }}
+      />
+    </Stack.Navigator>
+  )
 }
