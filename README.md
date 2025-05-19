@@ -2,9 +2,8 @@ Welcome to your Taskapp
 
 Made with React Native and Firebase.
 
-This is a customizable to do app created with React Native.
 
-#Features
+Features
 
 > Create, remove, update and delete tasks
 > Create accounts and save your tasks across multiple accounts
