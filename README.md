@@ -56,19 +56,20 @@ A modern task management application built with React Native and Firebase. TaskA
 
 ### Authentication Screens
 
-[![Login Screen](PLACEHOLDER_LOGIN_SCREEN.png)](PLACEHOLDER_LOGIN_SCREEN.png)
-_Login Screen_
+_Login & Signup Screen_
 
-[![Signup Screen](PLACEHOLDER_SIGNUP_SCREEN.png)](PLACEHOLDER_SIGNUP_SCREEN.png)
-_Signup Screen_
+[![Login Screen](Loginpage.png)](Loginpage.png) [![Signup Screen](SignUppage.png)](SignUppage.png)                                                             
+
+
+
 
 ### Main Features
 
-[![Task List](PLACEHOLDER_TASK_LIST.png)](PLACEHOLDER_TASK_LIST.png)
 _Task List View_
-
-[![Profile Screen](PLACEHOLDER_PROFILE_SCREEN.png)](PLACEHOLDER_PROFILE_SCREEN.png)
+_Add Task_
 _User Profile_
+
+[![Task List](Tasklist.png)](Tasklist.png)  [![Task List](Addtask.png)](Addtask.png)  [![Profile Screen](Profile.png)](Profile.png)
 
 ## 🚀 Getting Started
 
